@@ -237,6 +237,7 @@ export const createContexts = (options: {
   setContext<ThrelteContext>('threlte', ctx)
   setContext<ThrelteInternalContext>('threlte-internal-context', internalCtx)
   setContext<ThrelteUserContext>('threlte-user-context', userCtx)
+  setContext('threlte-gltf-context', {})
 
   const getCtx = (): ThrelteContext => ctx
   const getInternalCtx = (): ThrelteInternalContext => internalCtx

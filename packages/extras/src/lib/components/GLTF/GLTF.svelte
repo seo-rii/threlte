@@ -5,12 +5,15 @@
   import { useGltf } from '../../hooks/useGltf'
   import type { ThrelteGltf } from '../../types/types'
   import type { GltfEvents, GltfProps, GltfSlots } from './GLTF.svelte.js'
+	import {getContext} from "svelte";
+	import {InstancedMesh} from "three";
 
   type $$Props = GltfProps
   type $$Events = GltfEvents
   type $$Slots = GltfSlots
 
   const component = forwardEventHandlers()
+	const instances = getContext<{[key:string]: any}>('threlte-gltf-context')
 
   export let url: $$Props['url']
 
@@ -85,6 +88,9 @@
   const loadGltf = async (url: string) => {
     try {
       const model = await loader.load(url)
+			const geo = model.scene.children[0].geometry.clone();
+			const ins = new InstancedMesh(geo, model.scene.children[0].material, 1000);
+			console.log(ins)
       onLoad(model)
     } catch (error: any) {
       onError(error)
